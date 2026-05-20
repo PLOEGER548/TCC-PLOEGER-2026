@@ -1,0 +1,23 @@
+{
+  "name": "tcc-ploeger-2026",
+  "version": "1.0.0",
+  "description": "TCC 2026",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js"
+  },
+  "repository": {
+    "type": "module",
+    "url": "git+https://github.com/PLOEGER548/TCC-PLOEGER-2026.git"
+  },
+  "keywords": [],
+  "author": "PLOEGER548",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PLOEGER548/TCC-PLOEGER-2026/issues"
+  },
+  "homepage": "https://github.com/PLOEGER548/TCC-PLOEGER-2026#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

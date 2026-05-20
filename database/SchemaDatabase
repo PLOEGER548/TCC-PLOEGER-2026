@@ -1,0 +1,39 @@
+CREATE TABLE usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    senha TEXT NOT NULL,
+    telefone TEXT,
+    curso_preparatorio BOOLEAN DEFAULT 0,
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE empresas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    cnpj TEXT UNIQUE NOT NULL,
+    email TEXT,
+    telefone TEXT,
+    descricao TEXT
+);
+
+CREATE TABLE vagas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    titulo TEXT NOT NULL,
+    descricao TEXT,
+    salario REAL,
+    aceita_sem_experiencia BOOLEAN DEFAULT 1,
+    data_publicacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    empresa_id INTEGER NOT NULL,
+    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+);
+
+CREATE TABLE candidaturas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    data_candidatura DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status TEXT DEFAULT 'enviada',
+    usuario_id INTEGER NOT NULL,
+    vaga_id INTEGER NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (vaga_id) REFERENCES vagas(id)
+);
