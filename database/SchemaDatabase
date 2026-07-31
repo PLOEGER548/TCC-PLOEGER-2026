@@ -1,3 +1,71 @@
+Calma, sem panico! Vamos resolver isso ponto por ponto. Seu projeto tem alguns detalhes fáceis de arrumar, mas que estão bagunçando o ambiente.
+
+Aqui está o diagnóstico do que precisa ser corrigido:
+
+---
+
+## 1. Problemas Estruturais nas Pastas (VS Code)
+
+Dando uma olhada no seu painel esquerdo (`EXPLORADOR`), dá para ver uma **duplicação desnecessária e confusa**:
+
+* **Estrutura atual:** Você tem a pasta `TCC-PLOEGER-2026` e, **dentro dela**, existe outra pasta chamada `TCC-PLOEGER-2026` com exatamente as mesmas pastas (`backend`, `database`, `Mobile`, `node_modules`, `src`).
+* **Como arrumar:**
+1. Feche o VS Code.
+2. Abra o arquivo/pasta no seu sistema operacional (Explorador de Arquivos do Windows).
+3. Apague a pasta duplicada interna (certifique-se de não apagar os arquivos onde realmente trabalhou).
+4. **Atenção aos `node_modules`:** Não suba a pasta `node_modules` para o GitHub/repositório! Ela deve estar no seu `.gitignore`.
+
+
+
+---
+
+## 2. Erros de Sintaxe no Código SQL (`SchemaDatabase`)
+
+O arquivo SQL tem **sublinhados vermelhos** (erros de sintaxe do SQLite / SQL standard):
+
+* **O Erro Principal:** Há vírgulas soltas `,` antes de fechar os parênteses `)`. Em SQL, **o último campo de uma tabela NÃO pode ter vírgula antes do parêntese final**.
+* Exemplo na tabela `empresas` (linha 16): `telefone TEXT,` -> ok, mas `descricao TEXT` não tem vírgula. A linha 16 tem vírgula no final antes do `);`.
+* Exemplo na tabela `vagas` (linha 28): `FOREIGN KEY (empresa_id) REFERENCES empresas(id)` tem uma vírgula no final antes do `);`. Apague essa vírgula!
+* Exemplo na tabela `candidaturas` (linha 38): A linha `FOREIGN KEY (vaga_id) REFERENCES vagas(id)` tem vírgula antes do `);`. Apague essa vírgula.
+
+
+
+---
+
+## 3. Sobre o Git / "Outra pessoa deu o primeiro commit"
+
+Não tem problema nenhum outra pessoa ter feito o primeiro commit! No Git, o que importa é o histórico de contribuições.
+
+Para deixar o repositório com o **seu nome** a partir de agora no VS Code:
+
+1. Abra o Terminal do VS Code (`Ctrl + '` ou menu `Terminal > Novo Terminal`).
+2. Configure seu nome e e-mail do GitHub com os comandos:
+```bash
+git config --global user.name "Seu Nome"
+git config --global user.email "seu-email@exemplo.com"
+
+```
+
+
+3. Toda vez que você fizer `git commit` e `git push` a partir de agora, os novos commits ficarão no **seu nome**.
+
+---
+
+## 4. Sobre o MuMu Player não estar instalado
+
+O MuMu Player é apenas um emulador Android para testar sua aplicação `Mobile` (React Native / Flutter / Expo).
+
+* **Se você precisa testar o aplicativo Mobile:**
+1. Baixe e instale o **MuMu Player** (ou **Nox**, **LDPlayer**, **Android Studio Emulator**) no site oficial.
+2. **Alternativa muito mais fácil (se estiver usando Expo):** Baixe o aplicativo **Expo Go** no seu próprio celular físico (Android ou iPhone) e conecte via QR Code mantendo o celular e o PC na mesma rede Wi-Fi.
+
+
+
+---
+
+### Código SQL Corrigido (Pronto para copiar):
+
+```sql
 CREATE TABLE usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
@@ -37,3 +105,5 @@ CREATE TABLE candidaturas (
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     FOREIGN KEY (vaga_id) REFERENCES vagas(id)
 );
+
+```
