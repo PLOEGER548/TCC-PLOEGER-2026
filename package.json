@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/PLOEGER548/TCC-PLOEGER-2026#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mysql2": "^3.24.2"
   }
 }

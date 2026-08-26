@@ -1,43 +1,43 @@
+-- Criar e selecionar o banco de dados
+CREATE DATABASE IF NOT EXISTS barbearia;
+USE barbearia;
 
-```sql
-CREATE TABLE usuarios (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    senha TEXT NOT NULL,
-    telefone TEXT,
-    curso_preparatorio BOOLEAN DEFAULT 0,
-    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
+-- Tabela de Usuários (Clientes e Barbeiros)
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20),
+    tipo ENUM('cliente', 'barbeiro', 'admin') DEFAULT 'cliente',
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE empresas (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    cnpj TEXT UNIQUE NOT NULL,
-    email TEXT,
-    telefone TEXT,
+-- Tabela de Serviços
+CREATE TABLE IF NOT EXISTS servicos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    duracao_minutos INT NOT NULL,
     descricao TEXT
 );
 
-CREATE TABLE vagas (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titulo TEXT NOT NULL,
-    descricao TEXT,
-    salario REAL,
-    aceita_sem_experiencia BOOLEAN DEFAULT 1,
-    data_publicacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    empresa_id INTEGER NOT NULL,
-    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+-- Tabela de Agendamentos
+CREATE TABLE IF NOT EXISTS agendamentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    servico_id INT NOT NULL,
+    barbeiro_id INT,
+    data_hora DATETIME NOT NULL,
+    status ENUM('pendente', 'confirmado', 'cancelado') DEFAULT 'pendente',
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (servico_id) REFERENCES servicos(id) ON DELETE CASCADE,
+    FOREIGN KEY (barbeiro_id) REFERENCES usuarios(id) ON DELETE SET NULL
 );
 
-CREATE TABLE candidaturas (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    data_candidatura DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status TEXT DEFAULT 'enviada',
-    usuario_id INTEGER NOT NULL,
-    vaga_id INTEGER NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    FOREIGN KEY (vaga_id) REFERENCES vagas(id)
-);
-
-```
+-- Inserir dados de teste para começar
+INSERT INTO servicos (nome, preco, duracao_minutos, descricao) VALUES
+('Corte de Cabelo', 35.00, 30, 'Corte moderno ou tradicional'),
+('Barba Completa', 25.00, 20, 'Modelagem e toalha quente'),
+('Combo Corte + Barba', 50.00, 50, 'Serviço completo com desconto');
