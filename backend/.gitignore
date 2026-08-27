@@ -1,0 +1,9 @@
+# Arquivos de configuração do sistema
+.DS_Store
+Thumbs.db
+
+# Chaves e variáveis de ambiente secretas
+.env
+
+# Logs do servidor
+*.log
