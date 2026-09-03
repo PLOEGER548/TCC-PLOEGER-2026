@@ -6,7 +6,6 @@ export default function LoginScreen({ navigation }) {
   const [senha, setSenha] = useState('');
 
   const handleLogin = () => {
-    // Avança direto para a tela de agendamento
     navigation.navigate('Agendamento');
   };
 
@@ -37,7 +36,7 @@ export default function LoginScreen({ navigation }) {
       </TouchableOpacity>
 
       <View style={styles.linksContainer}>
-        <TouchableOpacity onPress={() => alert('Em breve: Criar Conta')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
           <Text style={styles.linkText}>Criar Conta</Text>
         </TouchableOpacity>
 

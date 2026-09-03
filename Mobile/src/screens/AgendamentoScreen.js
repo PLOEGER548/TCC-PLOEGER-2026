@@ -8,7 +8,7 @@ export default function AgendamentoScreen({ navigation }) {
   const servicos = [
     { id: 1, nome: 'Corte Cabelo', preco: 'R$ 35,00' },
     { id: 2, nome: 'Barba Completa', preco: 'R$ 25,00' },
-    { id: 3, name: 'Corte + Barba', preco: 'R$ 55,00' },
+    { id: 3, nome: 'Corte + Barba', preco: 'R$ 55,00' },
   ];
 
   const horarios = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
@@ -34,7 +34,7 @@ export default function AgendamentoScreen({ navigation }) {
             style={[styles.servicoCard, servicoSelecionado === s.id && styles.selectedCard]}
             onPress={() => setServicoSelecionado(s.id)}
           >
-            <Text style={styles.servicoNome}>{s.nome || s.name}</Text>
+            <Text style={styles.servicoNome}>{s.nome}</Text>
             <Text style={styles.servicoPreco}>{s.preco}</Text>
           </TouchableOpacity>
         ))}
@@ -48,7 +48,7 @@ export default function AgendamentoScreen({ navigation }) {
             style={[styles.horarioBtn, horarioSelecionado === h && styles.selectedHorario]}
             onPress={() => setHorarioSelecionado(h)}
           >
-            <Text style={styles.horarioText}>{h}</Text>
+            <Text style={[styles.horarioText, horarioSelecionado === h && styles.selectedHorarioText]}>{h}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   horarioBtn: { width: '23%', backgroundColor: '#222', paddingVertical: 12, borderRadius: 6, alignItems: 'center', marginBottom: 10, borderWidth: 1, borderColor: '#333' },
   selectedHorario: { backgroundColor: '#E5BF43' },
   horarioText: { color: '#FFF', fontWeight: 'bold' },
+  selectedHorarioText: { color: '#000' },
   button: { backgroundColor: '#E5BF43', height: 50, borderRadius: 8, justifyContent: 'center', alignItems: 'center', marginTop: 20 },
   buttonText: { color: '#000', fontWeight: 'bold', fontSize: 16 },
   secButton: { marginTop: 12, padding: 12, alignItems: 'center', marginBottom: 30 },

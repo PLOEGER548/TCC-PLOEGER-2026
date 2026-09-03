@@ -1,31 +1,47 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
 export default function MeusAgendamentosScreen({ navigation }) {
+  const agendamentos = [
+    { id: '1', servico: 'Corte + Barba', data: '28/08/2026', hora: '14:00', status: 'Confirmado' }
+  ];
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Meus Agendamentos 📅</Text>
 
-      <View style={styles.card}>
-        <Text style={styles.servico}>Corte de Cabelo</Text>
-        <Text style={styles.info}>Data: Hoje às 15:00</Text>
-        <Text style={styles.status}>Status: Confirmado ✅</Text>
-      </View>
+      <FlatList
+        data={agendamentos}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text style={styles.servico}>{item.servico}</Text>
+            <Text style={styles.info}>Data: {item.data} às {item.hora}</Text>
+            <Text style={styles.status}>Status: {item.status}</Text>
+          </View>
+        )}
+      />
 
-      <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Agendamento')}>
-        <Text style={styles.textoBotao}>Novo Agendamento</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Agendamento')}>
+        <Text style={styles.buttonText}>Novo Agendamento</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.secButton} onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.secButtonText}>Sair</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#121212' },
-  title: { fontSize: 22, fontWeight: 'bold', color: '#fff', marginBottom: 20, textAlign: 'center' },
-  card: { backgroundColor: '#1e1e1e', padding: 15, borderRadius: 8, borderWidth: 1, borderColor: '#d4af37', marginBottom: 20 },
-  servico: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
-  info: { color: '#aaa', marginVertical: 5 },
-  status: { color: '#4caf50', fontWeight: 'bold' },
-  botao: { backgroundColor: '#d4af37', padding: 15, borderRadius: 8, alignItems: 'center' },
-  textoBotao: { color: '#000', fontWeight: 'bold', fontSize: 16 }
+  container: { flex: 1, backgroundColor: '#121212', padding: 20 },
+  title: { fontSize: 22, fontWeight: 'bold', color: '#E5BF43', textAlign: 'center', marginVertical: 20 },
+  card: { backgroundColor: '#222', padding: 15, borderRadius: 8, marginBottom: 15, borderWidth: 1, borderColor: '#333' },
+  servico: { color: '#FFF', fontSize: 18, fontWeight: 'bold' },
+  info: { color: '#AAA', marginTop: 5 },
+  status: { color: '#E5BF43', marginTop: 5, fontWeight: 'bold' },
+  button: { backgroundColor: '#E5BF43', height: 50, borderRadius: 8, justifyContent: 'center', alignItems: 'center', marginTop: 10 },
+  buttonText: { color: '#000', fontWeight: 'bold', fontSize: 16 },
+  secButton: { marginTop: 15, alignItems: 'center' },
+  secButtonText: { color: '#888', fontSize: 14 }
 });
